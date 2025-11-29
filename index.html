@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Random Password Generator</title>
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <div class="card-inner">
+        <h1 class="title">
+          Generate a <span class="accent">random password</span>
+        </h1>
+        <p class="subtitle">Never use an insecure password again.</p>
+
+        <div class="controls">
+          <button id="generateBtn" class="btn">Generate passwords</button>
+
+          <div class="options">
+            <label>
+              Length
+              <input id="length" type="number" min="6" max="64" value="14" />
+            </label>
+
+            <label class="checkbox">
+              <input id="includeSymbols" type="checkbox" checked />
+              Symbols
+            </label>
+
+            <label class="checkbox">
+              <input id="includeNumbers" type="checkbox" checked />
+              Numbers
+            </label>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+       <div class="outputs">
+
+    <div class="password-row">
+        <div id="outA" class="output"></div>
+        <span id="copyA" class="copy-btn">📋</span>
+        <span id="msgA" class="copy-msg"></span>
+    </div>
+
+    <div class="password-row">
+        <div id="outB" class="output"></div>
+        <span id="copyB" class="copy-btn">📋</span>
+        <span id="msgB" class="copy-msg"></span>
+    </div>
+
+</div>
+
+    <!-- message box -->
+    <div id="copyMessage" class="copy-message"></div>
+</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="index.js"></script>
+</body>
+</html>
