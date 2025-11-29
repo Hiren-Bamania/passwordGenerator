@@ -49,7 +49,123 @@
       </div>
     </div>
   </main>
+  <script>
+// script.js - beginner-friendly
 
+// characters array provided by you
+const characters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
+"0","1","2","3","4","5","6","7","8","9",
+"~","`","!","@","#","$","%","^","&","*","(",")","_","-","+","=","{","[","}","]",",","|",":",";","<",">",".","?","/"];
+
+// DOM elements
+const outA = document.getElementById("outA");
+const outB = document.getElementById("outB");
+const copyA = document.getElementById("copyA");
+const copyB = document.getElementById("copyB");
+const msgA = document.getElementById("msgA");
+const msgB = document.getElementById("msgB");
+const generateBtn = document.getElementById("generateBtn");
+const lengthInput = document.getElementById("length");
+const includeSymbols = document.getElementById("includeSymbols");
+const includeNumbers = document.getElementById("includeNumbers");
+
+// start blank
+outA.textContent = "";
+outB.textContent = "";
+msgA.textContent = "";
+msgB.textContent = "";
+
+// derive categories from characters array
+const letters = characters.filter(ch => /[A-Za-z]/.test(ch));
+const numbers = characters.filter(ch => /[0-9]/.test(ch));
+const symbols = characters.filter(ch => /[^A-Za-z0-9]/.test(ch));
+
+function buildPool() {
+  let pool = letters.slice(); // always include letters
+  if (includeNumbers && includeNumbers.checked) {
+    pool = pool.concat(numbers);
+  }
+  if (includeSymbols && includeSymbols.checked) {
+    pool = pool.concat(symbols);
+  }
+  if (pool.length === 0) pool = characters.slice();
+  return pool;
+}
+
+function getPassword(length = 14) {
+  const pool = buildPool();
+  const len = Math.max(1, Math.min(128, Number(length) || 14));
+  let pwd = "";
+  for (let i = 0; i < len; i++) {
+    pwd += pool[Math.floor(Math.random() * pool.length)];
+  }
+  return pwd;
+}
+
+function generate() {
+  const len = lengthInput ? Number(lengthInput.value) || 14 : 14;
+  outA.textContent = getPassword(len);
+  outB.textContent = getPassword(len);
+  msgA.textContent = "";
+  msgB.textContent = "";
+}
+
+// fallback copy (works on file://)
+function fallbackCopy(text) {
+  const area = document.createElement("textarea");
+  area.value = text;
+  document.body.appendChild(area);
+  area.select();
+  try {
+    document.execCommand("copy");
+  } catch (e) {
+    // ignore
+  }
+  document.body.removeChild(area);
+}
+
+// try Clipboard API, else fallback
+function copyToClipboard(text) {
+  return new Promise((resolve) => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => resolve(true)).catch(() => {
+        fallbackCopy(text);
+        resolve(true);
+      });
+    } else {
+      fallbackCopy(text);
+      resolve(true);
+    }
+  });
+}
+
+// copy handlers
+copyA.onclick = function () {
+  if (!outA.textContent) return;
+  copyToClipboard(outA.textContent).then(() => {
+    msgA.textContent = "Password copied!";
+    setTimeout(function () { msgA.textContent = ""; }, 2000);
+  });
+};
+
+copyB.onclick = function () {
+  if (!outB.textContent) return;
+  copyToClipboard(outB.textContent).then(() => {
+    msgB.textContent = "Password copied!";
+    setTimeout(function () { msgB.textContent = ""; }, 2000);
+  });
+};
+
+// generate button
+generateBtn.onclick = generate;
+
+// clear results when options change (makes UX clearer)
+if (includeSymbols) includeSymbols.onchange = function () { outA.textContent = ""; outB.textContent = ""; };
+if (includeNumbers) includeNumbers.onchange = function () { outA.textContent = ""; outB.textContent = ""; };
+if (lengthInput) lengthInput.oninput = function () { outA.textContent = ""; outB.textContent = ""; };
+
+</script>
   <!-- load script last so DOM elements exist; use exact relative path -->
   <script src="./script.js"></script>
 </body>
