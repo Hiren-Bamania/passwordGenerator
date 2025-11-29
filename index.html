@@ -4,12 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Random Password Generator</title>
-  <link rel="stylesheet" href="./index.css" />
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <main class="page">
-    <section class="card">
+
+  <main>
+    <div class="card">
       <div class="card-inner">
+
         <h1 class="title">
           Generate a <span class="accent">random password</span>
         </h1>
@@ -19,48 +21,36 @@
           <button id="generateBtn" class="btn">Generate passwords</button>
 
           <div class="options">
-            <label>
-              Length
-              <input id="length" type="number" min="6" max="64" value="14" />
+            <label>Length
+              <input id="length" type="number" min="4" max="128" value="14" />
             </label>
 
-            <label class="checkbox">
-              <input id="includeSymbols" type="checkbox" checked />
-              Symbols
-            </label>
-
-            <label class="checkbox">
-              <input id="includeNumbers" type="checkbox" checked />
-              Numbers
-            </label>
+            <label><input id="includeSymbols" type="checkbox" checked /> Symbols</label>
+            <label><input id="includeNumbers" type="checkbox" checked /> Numbers</label>
           </div>
         </div>
 
         <hr class="divider" />
 
-       <div class="outputs">
+        <div class="outputs">
+          <div class="password-row">
+            <div id="outA" class="output" aria-live="polite"></div>
+            <span id="copyA" class="copy-btn" title="Copy password">📋</span>
+            <span id="msgA" class="copy-msg" aria-hidden="true"></span>
+          </div>
 
-    <div class="password-row">
-        <div id="outA" class="output"></div>
-        <span id="copyA" class="copy-btn">📋</span>
-        <span id="msgA" class="copy-msg"></span>
-    </div>
+          <div class="password-row">
+            <div id="outB" class="output" aria-live="polite"></div>
+            <span id="copyB" class="copy-btn" title="Copy password">📋</span>
+            <span id="msgB" class="copy-msg" aria-hidden="true"></span>
+          </div>
+        </div>
 
-    <div class="password-row">
-        <div id="outB" class="output"></div>
-        <span id="copyB" class="copy-btn">📋</span>
-        <span id="msgB" class="copy-msg"></span>
-    </div>
-
-</div>
-
-    <!-- message box -->
-    <div id="copyMessage" class="copy-message"></div>
-</div>
       </div>
-    </section>
+    </div>
   </main>
 
-  <script src="./index.js"></script>
+  <!-- load script last so DOM elements exist; use exact relative path -->
+  <script src="./script.js"></script>
 </body>
 </html>
